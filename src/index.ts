@@ -5,7 +5,7 @@ const Bunserve = Bun.serve({
   port: 3001,
   async fetch(req, server) {
     const url = new URL(req.url);
-    console.log(`[?] ${url}`)
+    // console.log(`[?] ${url}`)
     if (url.pathname === "/") {
       Bun.gc(false)
 

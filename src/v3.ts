@@ -1,5 +1,4 @@
 import { cacheNotModified, nullBodyStatus, flattenHeader, defaultCachePassHeaders} from "./utils";
-
 const VersionThree = async (req: Request): Promise<Response> => {
   const Bareheaders = req.headers.get("x-bare-headers");
   const Bareurl = req.headers.get("x-bare-url");
@@ -27,6 +26,7 @@ const VersionThree = async (req: Request): Promise<Response> => {
   const res = await fetch(request, {
     signal: abort.signal,
   });
+
   // @ts-ignore
   req.signal.onabort = () => abort.abort();
 
@@ -39,6 +39,8 @@ const VersionThree = async (req: Request): Promise<Response> => {
   }
   
 
+
+
   if (res.status !== cacheNotModified) {
     resHeaders.set("x-bare-status", res.status.toString());
     resHeaders.set("x-bare-status-text", res.statusText.toString());
@@ -46,15 +48,18 @@ const VersionThree = async (req: Request): Promise<Response> => {
   }
 
 
+  let responseBody = await res.blob()
+  
+  
 
-  console.log(resHeaders)
-  const responseBody = await res.text();
+  
+
   const responseInit: ResponseInit = {
     status: res.status,
     statusText: res.statusText,
-    headers: resHeaders,
+    headers: resHeaders,  
   };
-  Bun.gc(false);
+  Bun.gc(true);
   return new Response(
     nullBodyStatus.includes(res.status) ? undefined : responseBody,
     responseInit
