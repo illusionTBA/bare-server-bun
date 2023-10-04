@@ -1,0 +1,14 @@
+{
+  "name": "bsb",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@tomphttp/bare-client": "^2.2.0-alpha"
+  }
+}
